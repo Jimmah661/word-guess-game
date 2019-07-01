@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <main>
+        <!-- This is where the structure will be written -->
+        <section
+            style="width: 800px; height: 100vh; margin: 0 auto; background-color: black; color: white; border: 4px solid grey; padding: 10px">
+            <h1 style="text-align: center; font-family: 'arial', 'Helvetica'">Sci-Fi Word Guess</h1>
+
+            <span id="startGame">Press Enter to start the game!</span><br>
+            <!-- <span id="docwrite">This is the Test Text</span> -->
+
+            <!-- Game content goes here -->
+            <span id="dashes">Test</span>
+
+
+        </section>
+    </main>
+
+    <!-- javascripting starts here -->
+    <script type="text/javascript">
+
+        // define global variables here
+        var startGame = document.getElementById("startGame");
+        var dashes = document.getElementById("dashes");
+        var wordArray = ['borg', 'transporter', 'dilithium', 'lightsaber', 'force', 'starship', 'enterprise'];
+        var dashArray = [];
+        var chances = 10;
+        var wins = 0;
+        var losses = 0;
+    </script>
+</body>
+
+</html>
+
+
+<!-- This is just junk JS coding, storing here for now -->
+
+// define global variables here
+var startGame = document.getElementById("startGame");
+var dashes = document.getElementById("dashes");
+// var docwrite = document.getElementById("docwrite");
+var wordArray = ['borg', 'transporter', 'dilithium', 'lightsaber', 'force', 'starship', 'enterprise'];
+var dashArray = [];
+var chances = 0;
+var wins = 0;
+var losses = 0;
+
+
+// Functions start here
+document.onkeyup = function (event) {
+
+
+
+// This is where the local variables will be stored
+var keyDown = event.key;
+
+
+// For debugging I'll have it log all keypresses to the console
+console.log(keyDown);
+
+
+// Here is where we'll start the game
+if (keyDown == "Enter") {
+var chances = 10;
+// Clear the initial instruction so that the game can begin
+startGame.textContent = "";
+
+// Psuedo coding time BISH!
+// Steps that I'll need to code go here
+// Will need to plan out each step indavidually
+
+// STEP MOTHER-FLIPPIN ONE!!!!!!!!
+// When the game starts we need to select a random word from our array
+var word = wordArray[Math.floor(Math.random() * wordArray.length)];
+console.log(word);
+
+// This will then get converted to its own array made up of each letter
+var letterArray = Array.from(word);
+console.log(letterArray);
+
+
+// STEP MOTHER-FLIPPING TWO!!!!!!!!
+// Once the word has been split we need to display a number of dashes on the screen
+// The number of dashes must be equal to the number of letters in the word
+// the dashes displayed will be an array and i'll push one _ to the array for every letter
+for (i = 0; i < letterArray.length; i++) { dashArray.push("_"); }; console.log(dashArray);
+    dashes.textContent=dashArray; //check that the key entered is in the letterArray if
+    ((letterArray.indexOf(keyDown.toLowerCase) !=-1)) { console.log("Yup, that letter was in there"); } else {
+    console.log("nah mate"); var chances=chances - 1; }; // STEP MOTHER-FLIPPING THREE!!!!!!!! // We then need to allow
+    the user to input letters // Anything that is not a letter will be rejected // It will take those letters and
+    compare them to the array. // If it finds the letter in the array it will update the dashes to display that
+    letter // If the letter is not found then it will add it to the list of guessed letters and take away one chance } }

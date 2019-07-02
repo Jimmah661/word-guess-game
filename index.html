@@ -14,7 +14,9 @@
 
       <span id="test">Press Enter to start the game!</span><br>
       <span id="dashes"></span><br>
-      <span id="chances"></span>
+      <span id="chances"></span><br>
+      <span id="wins"></span><br>
+      <span id="losses"></span>
 
       <!-- Game content goes here -->
 
@@ -36,6 +38,10 @@
     var keyPress;
     var chances = 10;
     var remainingChances = document.getElementById("chances");
+    var wins = 0;
+    var winTotal = document.getElementById("wins");
+    var losses = 0;
+    var lossesTotal = document.getElementById("losses");
 
 
     document.onkeyup = function (event) {
@@ -51,6 +57,8 @@
         var message = document.getElementById("test");
         message.textContent = "Game Start!";
         remainingChances.textContent = "Remaining Chances: " + chances;
+        winTotal.textContent = "Wins: " + wins;
+        lossesTotal.textContent = "Losses: " + losses;
         gameState = true;
 
 
@@ -69,7 +77,9 @@
         dashes.textContent = dashArray;
       }
 
-      //check if keystroke is a letter
+
+      // PLAY AREA
+      //Game Playing
       if (event.keyCode > 64 && event.keyCode < 91 && gameState === true) {
         if (letterArray.indexOf(keyPress.toLowerCase()) !== -1) {
           // check the letterArray to see if the letter is in the array
@@ -85,11 +95,28 @@
           remainingChances.textContent = chances;
         }
       }
+
+      // Win/Loss scenarios
+      if ((dashArray.indexOf("_") === -1) && (gameState === true)) {
+        var message = document.getElementById("test");
+        alert("You Win!");
+        wins = wins + 1;
+        winTotal.textContent = "Wins: " + wins;
+      }
+
+      else if ((chances === 0) && (gameState === true)) {
+        var message = document.getElementById("test");
+        alert("You Lose :(");
+        losses = losses + 1;
+        lossesTotal.textContent = "Losses: " + losses;
+      }
+      // END PLAY AREA
+
+
+
+
+      //End Functional area
     }
-// To check if the game is won we should be running a while check on dashArray.indexOf("_") !== -1;
-// This will keep an eye on wether or not they have guessed all the letters
-
-
   </script>
 </body>
 

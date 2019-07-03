@@ -10,13 +10,30 @@
     <!-- This is where the structure will be written -->
     <section
       style="width: 800px; height: 100vh; margin: 0 auto; background-color: black; color: white; border: 4px solid grey; padding: 10px">
-      <h1 style="text-align: center; font-family: 'arial', 'Helvetica'">Sci-Fi Word Guess</h1>
-
-      <span id="test">Press Enter to start the game!</span><br>
-      <span id="dashes"></span><br>
-      <span id="chances"></span><br>
-      <span id="wins"></span><br>
-      <span id="losses"></span>
+      <div style="width: calc(100% - 10px); height: 100px; border: 4px solid grey">
+        <h1 style="text-align: center; line-height: 100px; margin: 0;font-family: 'arial', 'Helvetica'">Sci-Fi Word
+          Guess</h1>
+      </div>
+      <div>
+        <span id="test">Press Enter to start the game!</span>
+      </div><br>
+      <div style="width: 60%; height: 100px; float: left; text-align: center; font-size: 150%">
+        <span id="dashes"></span>
+      </div><br>
+      <div
+        style="width: 40%; height: 50px; float: left; text-align: center; font-size: 150%; background-color:green; border-radius: 10px; line-height: 50px">
+        <span id="wins"></span>
+      </div><br>
+      <div
+        style="width: 40%; height: 50px; float: left; text-align: center; font-size: 150%; background-color: blue; border-radius: 10px; line-height: 50px">
+        <span id="losses"></span>
+      </div>
+      <div>
+        <span id="chances"></span>
+      </div><br>
+      <div>
+        <span id="guesses"></span>
+      </div>
 
       <!-- Game content goes here -->
 
@@ -42,7 +59,7 @@
     var winTotal = document.getElementById("wins");
     var losses = 0;
     var lossesTotal = document.getElementById("losses");
-
+    var guessedLetters = [];
 
     document.onkeyup = function (event) {
       keyPress = event.key;
@@ -61,7 +78,6 @@
         lossesTotal.textContent = "Losses: " + losses;
         gameState = true;
 
-
         // Choose a word from the array of possible choices
         chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)];
 
@@ -74,7 +90,7 @@
         }
 
         // display those dashes
-        dashes.textContent = dashArray;
+        dashes.textContent = dashArray.join(' ');
       }
 
 
@@ -86,13 +102,19 @@
           for (i = 0; i < letterArray.length; i++) {
             if (letterArray[i] === keyPress.toLowerCase()) {
               dashArray[i] = keyPress.toUpperCase();
-              dashes.textContent = dashArray;
+              dashes.textContent = dashArray.join(' ');
+              guessedLetters.push(keyPress.toUpperCase());
+              var guesses = document.getElementById("guesses");
+              guesses.textContent = guessedLetters.join(" ");
             }
           }
         } else {
           // if letter is not in the letterArray then it will reduce the remaining chances by one
           chances = chances - 1;
-          remainingChances.textContent = chances;
+          remainingChances.textContent = "Remaining Chances: " + chances;
+          guessedLetters.push(keyPress.toUpperCase());
+          var guesses = document.getElementById("guesses");
+          guesses.textContent = guessedLetters.join(" ");
         }
       }
 
@@ -102,6 +124,9 @@
         alert("You Win!");
         wins = wins + 1;
         winTotal.textContent = "Wins: " + wins;
+        gameState = false;
+        dashArray = [];
+        chances = 10;
       }
 
       else if ((chances === 0) && (gameState === true)) {
@@ -109,6 +134,9 @@
         alert("You Lose :(");
         losses = losses + 1;
         lossesTotal.textContent = "Losses: " + losses;
+        gameState = false;
+        dashArray = [];
+        chances = 10;
       }
       // END PLAY AREA
 

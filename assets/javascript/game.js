@@ -1,19 +1,34 @@
 // See all updated script below this line, Previous script was Garbage
 // All praise JS Bin
 
-var wordArray = ['borg', 'transporter', 'dilithium', 'lightsaber', 'force', 'starship', 'enterprise'];
+var wordArray = ['borg', 'transporter', 'dilithium', 'lightsaber', 'force', 'starship', 'enterprise', 'alien', 'android', 'blaster', 'multiverse', 'universe', 'robot', 'spaceship', 'terraforming', 'tardis', 'hyperdrive', 'jedi', 'skywalker', 'federation', 'starfleet'];
 var chosenWord
 var letterArray = [];
 var dashArray = [];
-var gameState = false;
+var gameActive = false;
 var keyPress;
 var chances = 10;
-var remainingChances = document.getElementById("chances");
 var wins = 0;
-var winTotal = document.getElementById("wins");
 var losses = 0;
-var lossesTotal = document.getElementById("losses");
 var guessedLetters = [];
+var remainingChances = document.getElementById("chances");
+var winTotal = document.getElementById("wins");
+var lossesTotal = document.getElementById("losses");
+
+var restartGame = function () {
+    dashArray = [];
+    guessedLetters = [];
+
+    gameActive = false;
+    guesses.textContent = guessedLetters;
+    chances = 10;
+}
+
+var updateInfo = function () {
+    winTotal.textContent = "Wins: " + wins;
+    lossesTotal.textContent = "Losses: " + losses;
+    remainingChances.textContent = "Remaining Chances: " + chances;
+}
 
 document.onkeyup = function (event) {
     keyPress = event.key;
@@ -21,16 +36,14 @@ document.onkeyup = function (event) {
     console.log(keyCode);
 
 
-    if (keyPress === "Enter" && gameState === false) {
+    if (keyPress === "Enter" && gameActive === false) {
 
         //if there is no game in process it kicks off the startGame function
-        //It then changes the gameState to true to prevent this function running again till the game is finished
+        //It then changes the gameActive to true to prevent this function running again till the game is finished
         var message = document.getElementById("test");
         message.textContent = "Game Start!";
-        remainingChances.textContent = "Remaining Chances: " + chances;
-        winTotal.textContent = "Wins: " + wins;
-        lossesTotal.textContent = "Losses: " + losses;
-        gameState = true;
+        updateInfo();
+        gameActive = true;
 
         // Choose a word from the array of possible choices
         chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)];
@@ -50,7 +63,7 @@ document.onkeyup = function (event) {
 
     // PLAY AREA
     //Game Playing
-    if (event.keyCode > 64 && event.keyCode < 91 && gameState === true) {
+    if (event.keyCode > 64 && event.keyCode < 91 && gameActive === true) {
         if (letterArray.indexOf(keyPress.toLowerCase()) !== -1) {
             // check the letterArray to see if the letter is in the array
             for (i = 0; i < letterArray.length; i++) {
@@ -65,7 +78,7 @@ document.onkeyup = function (event) {
         } else {
             // if letter is not in the letterArray then it will reduce the remaining chances by one
             chances = chances - 1;
-            remainingChances.textContent = "Remaining Chances: " + chances;
+            updateInfo();
             guessedLetters.push(keyPress.toUpperCase());
             var guesses = document.getElementById("guesses");
             guesses.textContent = guessedLetters.join(" ");
@@ -73,24 +86,20 @@ document.onkeyup = function (event) {
     }
 
     // Win/Loss scenarios
-    if ((dashArray.indexOf("_") === -1) && (gameState === true)) {
+    if ((dashArray.indexOf("_") === -1) && (gameActive === true)) {
         var message = document.getElementById("test");
         alert("You Win!");
         wins = wins + 1;
-        winTotal.textContent = "Wins: " + wins;
-        gameState = false;
-        dashArray = [];
-        chances = 10;
+        restartGame();
+        updateInfo();
     }
 
-    else if ((chances === 0) && (gameState === true)) {
+    else if ((chances === 0) && (gameActive === true)) {
         var message = document.getElementById("test");
         alert("You Lose :(");
         losses = losses + 1;
-        lossesTotal.textContent = "Losses: " + losses;
-        gameState = false;
-        dashArray = [];
-        chances = 10;
+        restartGame();
+        updateInfo();
     }
     // END PLAY AREA
 

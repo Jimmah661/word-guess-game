@@ -1,6 +1,7 @@
 body {
     margin: 0;
     background-color: #000;
+    text-align: center;
 }
 
 /* Lets look at https://alligator.io/css/gradient-borders-pure-css/ for some notes on making a border with a gradient */
@@ -81,6 +82,7 @@ body {
     height: 50px;
     line-height: 50px;
     background-color: orangered;
+    float: right;
 }
 
 #guesses {
@@ -88,11 +90,5 @@ body {
     height: 50px;
     line-height: 50px;
     background-color: orange;
-}
-
-#space {
-    /* object-fit: cover;
-    position: absolute; */
-    width: 100vh;
-    height: 100vh;
+    float: left;
 }

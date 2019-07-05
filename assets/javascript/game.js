@@ -14,20 +14,22 @@ var guessedLetters = [];
 var remainingChances = document.getElementById("chances");
 var winTotal = document.getElementById("wins");
 var lossesTotal = document.getElementById("losses");
+var guesses = document.getElementById("guesses");
 
 var restartGame = function () {
     dashArray = [];
     guessedLetters = [];
-
     gameActive = false;
-    guesses.textContent = guessedLetters;
+    guesses.textContent = "Guessed Letters: " + guessedLetters;
     chances = 10;
+
 }
 
 var updateInfo = function () {
     winTotal.textContent = "Wins: " + wins;
     lossesTotal.textContent = "Losses: " + losses;
     remainingChances.textContent = "Remaining Chances: " + chances;
+
 }
 
 document.onkeyup = function (event) {
@@ -64,31 +66,32 @@ document.onkeyup = function (event) {
     // PLAY AREA
     //Game Playing
     if (event.keyCode > 64 && event.keyCode < 91 && gameActive === true) {
-        if (letterArray.indexOf(keyPress.toLowerCase()) !== -1) {
-            // check the letterArray to see if the letter is in the array
-            for (i = 0; i < letterArray.length; i++) {
-                if (letterArray[i] === keyPress.toLowerCase()) {
-                    dashArray[i] = keyPress.toUpperCase();
-                    dashes.textContent = dashArray.join(' ');
-                    guessedLetters.push(keyPress.toUpperCase());
-                    var guesses = document.getElementById("guesses");
-                    guesses.textContent = guessedLetters.join(" ");
+        if (guessedLetters.indexOf(keyPress.toUpperCase()) === -1) {
+            if (letterArray.indexOf(keyPress.toLowerCase()) !== -1) {
+                // check the letterArray to see if the letter is in the array
+                for (i = 0; i < letterArray.length; i++) {
+                    if (letterArray[i] === keyPress.toLowerCase()) {
+                        dashArray[i] = keyPress.toUpperCase();
+                        dashes.textContent = dashArray.join(' ');
+                        guessedLetters.push(keyPress.toUpperCase());
+                        guesses.textContent = "Guessed Letters: " + guessedLetters.join(" ");
+                    }
                 }
+            } else {
+                // if letter is not in the letterArray then it will reduce the remaining chances by one
+                chances = chances - 1;
+                updateInfo();
+                guessedLetters.push(keyPress.toUpperCase());
+
+                guesses.textContent = "Guessed Letters: " + guessedLetters.join(" ");
             }
-        } else {
-            // if letter is not in the letterArray then it will reduce the remaining chances by one
-            chances = chances - 1;
-            updateInfo();
-            guessedLetters.push(keyPress.toUpperCase());
-            var guesses = document.getElementById("guesses");
-            guesses.textContent = guessedLetters.join(" ");
         }
     }
 
     // Win/Loss scenarios
     if ((dashArray.indexOf("_") === -1) && (gameActive === true)) {
         var message = document.getElementById("test");
-        alert("You Win!");
+        message.textContent = "You Win! Press ENTER to start again!"
         wins = wins + 1;
         restartGame();
         updateInfo();
@@ -96,7 +99,7 @@ document.onkeyup = function (event) {
 
     else if ((chances === 0) && (gameActive === true)) {
         var message = document.getElementById("test");
-        alert("You Lose :(");
+        message.textContent = "You LOSE! Press ENTER to try again."
         losses = losses + 1;
         restartGame();
         updateInfo();

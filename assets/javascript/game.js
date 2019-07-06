@@ -29,7 +29,7 @@ var updateInfo = function () {
     winTotal.textContent = "Wins: " + wins;
     lossesTotal.textContent = "Losses: " + losses;
     remainingChances.textContent = "Remaining Chances: " + chances;
-
+    guesses.textContent = "Guessed Letters: " + guessedLetters;
 }
 
 document.onkeyup = function (event) {
